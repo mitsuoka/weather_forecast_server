@@ -1,0 +1,51 @@
+body {
+  width: 450px;
+  background-color: #F8F8F8;
+  font-family: Meiryo,'Open Sans', sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 15px;
+}
+
+h1, h2 {
+  color: orange;
+  text-align: center;
+  font-family: Meiryo,'Open Sans', sans-serif;  
+  font-size: 14px;
+}
+
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  width: 150px;
+  white-space:pre;
+  border: 1px solid green;
+}
+
+#selectMenu {
+   width: 100px;
+   height: 30px;
+}
+
+#imageCells {
+  height: 50px;
+  text-align: center;
+}
+
+#eachDayCells {
+  text-align: center;
+  vertical-align: top;
+  font-size: 13px;
+}
+
+#tableBottom, #descriptionBottom {
+  font-size: 10px;
+}
+
+#descriptionArea {
+  width: 450px;
+}

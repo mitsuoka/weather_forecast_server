@@ -1,0 +1,4 @@
+name: WeatherForecast_client
+description: A sample web application
+dependencies:
+  browser: any
