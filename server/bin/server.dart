@@ -14,10 +14,10 @@
   * client.dart.js.map
   * dart.js
   * favicon.ico
-  This server servers as a Proxy for the LWWS server also. Necesarry data will be
+  This server serves as a Proxy for the LWWS server also. Necessary data will be
   provided to the client:
   * JSON weather forecast data for the requested city code
-  * Image files for the forcast
+  * Image files for the forecast
 
   October 2014, by Terry
 */
@@ -155,7 +155,7 @@ class LwwsProxy {
 
   returnJson(HttpRequest req, List<int> bytes) {
     if (bytes == null) {
-      return null;
+      notFoundHandler.onRequest(req);
     } else {
       var res = req.response;
       addCorsHeaders(res);
