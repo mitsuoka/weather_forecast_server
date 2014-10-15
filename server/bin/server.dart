@@ -14,7 +14,7 @@
   * client.dart.js.map
   * dart.js
   * favicon.ico
-  This server serves as a Proxy for the LWWS server also. Necessary data will be
+  This server serves as a Ploxy for the LWWS server also. Necessary data will be
   provided to the client:
   * JSON weather forecast data for the requested city code
   * Image files for the forecast
@@ -32,7 +32,7 @@ final REQUEST_PATH = '/weather';
 final LOG_REQUESTS = true;
 
 final fileHandler = new FileHandler();
-final lwwsProxy = new LwwsProxy();
+final lwwsPloxy = new LwwsPloxy();
 final badRequestHandler = new BadRequestHandler();
 final notFoundHandler = new NotFoundHandler();
 
@@ -72,16 +72,16 @@ void requestReceivedHandler(HttpRequest request) {
       //need LWWS access?
       if (request.uri.path.contains('lwws')) {
         if (request.uri.queryParameters['city'] != null) {
-          lwwsProxy.getJsonFile(request.uri.queryParameters['city'], request)
+          lwwsPloxy.getJsonFile(request.uri.queryParameters['city'], request)
             .then((bytes){
-            lwwsProxy.returnJson(request, bytes);
+            lwwsPloxy.returnJson(request, bytes);
           });
         }  else if (request.uri.queryParameters['image'] != null) {
           String imageFile = request.uri.queryParameters['image'];
           if (fileHandler.isExist(imageFile)) {
             fileHandler.onRequest2(request, imageFile);
           } else {
-            lwwsProxy.getImageFile(imageFile, request)
+            lwwsPloxy.getImageFile(imageFile, request)
               .then ( (bytes) {
                 if (bytes != null) {
                   fileHandler.saveFile(imageFile, bytes)
@@ -112,12 +112,12 @@ void requestReceivedHandler(HttpRequest request) {
 
 
 /**
- * LWWS proxy
+ * LWWS ploxy
  * get json data from the Lwws
  * get image file from the Lwws
  * return json data to the client
  */
-class LwwsProxy {
+class LwwsPloxy {
 
   Future<List<int>> getJsonFile(String cityCode, HttpRequest request) {
     return _getBytes(Uri.parse('http://${lwwsJson}?city=${cityCode}'), request);
