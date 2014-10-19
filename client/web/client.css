@@ -29,6 +29,7 @@ td {
 #selectMenu {
    width: 150px;
    height: 30px;
+   font-size: 13px;
 }
 
 #imageCells {
