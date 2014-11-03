@@ -17,7 +17,7 @@ to the ["Dart Language Gide"](http://www.cresc.co.jp/tech/java/Google_Dart/DartL
 ### Try it ###
 
 1. Run the server (server.dart) in the server\bin folder.
-2. From any browser including Dartium (except for IE), call the server as **http://127.0.0.1:8080/weather**.
+2. From any browser including Dartium (except for IE-9), call the server as **http://127.0.0.1:8080/weather**.
 3. Select another city from the select menu.
 
 Note: Do not start the client code (client.html) from Dart Editor. Client codes are supplied from the server.
