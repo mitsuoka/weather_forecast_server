@@ -184,13 +184,13 @@ class FileHandler {
 
   // return specified file (like 'client.css') in the ../client directory to the client
   onRequest1(HttpRequest request, String fileName) {
-    fname = '../../client/web/' + fileName;
+    fname = '../client/web/' + fileName;
     _onRequest(request);
   }
 
   // return specified file (like '1.gif') in the ../resources directory to the client
   onRequest2(HttpRequest request, String fileName) {
-    fname = '../resources/' + fileName;
+    fname = 'resources/' + fileName;
     _onRequest(request);
   }
 
@@ -228,7 +228,7 @@ class FileHandler {
   Future<File> saveFile(String fname, List<int> bytes) {
     try {
       var completer = new Completer();
-      var file = new File('../resources/' + fname);
+      var file = new File('resources/' + fname);
       file.create().then((file){
       file.writeAsBytes(bytes).then((_){
         completer.complete(file);
