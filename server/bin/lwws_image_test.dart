@@ -1,6 +1,6 @@
 /**
  * Sample to access a web service server (no credentials)
- * Get an image file and save in the ../resouces directory
+ * Get an image file and save in the ../resources directory
  */
 
 import 'dart:io';

@@ -23,7 +23,7 @@
 */
 
 import 'dart:io';
-import '../packages/mime_type/mime_type.dart' as mime;
+import 'package:mime_type/mime_type.dart' as mime;
 import 'dart:async';
 
 final HOST = InternetAddress.LOOPBACK_IP_V4;
