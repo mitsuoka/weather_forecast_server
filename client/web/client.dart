@@ -1,13 +1,13 @@
 /*
   Dart code sample: simple application for Livedoor Weather Web Service (LWWS)
   This is a client side code that will be supplied by the server.
-  Therefore, do not start this client from your Dart Editor.
-  Call the server as http://127.0.0.1:8080/weather from your browser (except for IE).
+  Call the server as http://127.0.0.1:8080/weather from your browser.
   October 2014, by Terry
+  April 2019, made Dart 2 compliant
 */
 
 import 'dart:html';
-import 'dart:convert' show JSON;
+import 'dart:convert';
 import 'dart:async';
 
 final LOG_REQUESTS = true;
@@ -15,12 +15,16 @@ const host = "127.0.0.1:8080/weather/lwws";
 String cityCode = '130010';
 
 void main() {
-  window.onLoad.listen((ev){
-    loadData().then((str){dartDom(str);});
+  window.onLoad.listen((ev) {
+    loadData().then((str) {
+      dartDom(str);
+    });
     SelectElement smenu = document.getElementById("selectMenu");
-    smenu.onChange.listen((ev){
+    smenu.onChange.listen((ev) {
       cityCode = smenu.value;
-      loadData().then((str){dartDom(str);});
+      loadData().then((str) {
+        dartDom(str);
+      });
     });
   });
 }
@@ -29,92 +33,100 @@ Future loadData() {
   log("Loading data");
   var url = "http://${host}?city=$cityCode";
   // call the web server asynchronously
-  var completer = new Completer();
-  var request = HttpRequest.getString(url, withCredentials: false)
-    .then((responseText) {
-      logFlesh('JSON data loaded : $responseText');
-      completer.complete(responseText);
-    })
-    .catchError((error) {
-      log('requested data is not available : $error');
-    });
+  var completer = new Completer<String>();
+  HttpRequest.getString(url, withCredentials: false).then((responseText) {
+    logFlesh('JSON data received : \n$responseText');
+    completer.complete(responseText);
+  }).catchError((error) {
+    log('requested data is not available : $error');
+  });
   return completer.future;
 }
 
 /**
-create a dynamic HTML page
-*/
+    create a dynamic HTML page
+ */
 dartDom(jsonStr) {
-  try{
+  try {
+    var jsonObj = jsonDecode(jsonStr);
+    log('jsonObj = \n$jsonObj');
 
-  var jsonObj = JSON.decode(jsonStr);
-//  log('jsonObj = ' + jsonObj.toString());
+    // title
+    document.getElementById('forcastTitle').innerHtml =
+        '<br>${jsonObj["title"]}';
 
-  // title
-  document.getElementById('forcastTitle').innerHtml = '<br>${jsonObj["title"]}';
+    // each day display area
+    List forecasts = jsonObj["forecasts"];
 
-  // each day display area
-  List forecasts = jsonObj["forecasts"];
-  var forecast;
+    // images
+    TableRowElement td0Cells = document.getElementById('imageCells');
+    td0Cells.cells.forEach((cell) {
+      cell.innerHtml = "";
+    });
+    var column = 0;
+    forecasts.forEach((forecast) {
+      Uri uri = Uri.parse(forecast['image']['url']);
+      var img = new ImageElement();
+      img.src = "/weather/lwws?image=${uri.pathSegments.last}";
+      td0Cells.cells[column].append(img);
+      column = column + 1;
+    });
 
-  // images
-  var cells = document.getElementById('imageCells');
-  while (cells.childNodes.length != 0) cells.deleteCell(0);
-  forecasts.forEach((forecast) {
-    Element tdElement = new Element.tag('td');
-    var img = document.createElement("IMG");
-    Uri uri = Uri.parse(forecast['image']['url']);
-    img.src="/weather/lwws?image=${uri.pathSegments.last}";
-    tdElement.children = [img];
-    document.getElementById('imageCells').append(tdElement);
-  });
+    // descriptions
+    TableRowElement td1Cells = document.getElementById('eachDayCells');
+    td1Cells.cells.forEach((cell) {
+      cell.innerHtml = "";
+    });
+    column = 0;
+    forecasts.forEach((forecast) {
+      String txt = '${forecast["dateLabel"]}' + '\n' + '${forecast["telop"]}';
 
-  // descriptions
-  cells = document.getElementById('eachDayCells');
-  while (cells.childNodes.length != 0) cells.deleteCell(0);
-  forecasts.forEach((forecast) {
-    Element tdElement = new Element.tag('td');
-    tdElement.appendText(forecast["dateLabel"]);
-    tdElement.appendText('\n' + forecast['telop']);
-    Map temp = forecast['temperature']['max'];
-    if (temp == null) tdElement.appendText('\n最高温度 ： ---');
-    else  tdElement.appendText('\n最高温度 ： ${temp["celsius"]}°C');
-    temp = forecast['temperature']['min'];
-    if (temp == null) tdElement.appendText('\n最低温度 ： ---');
-    else  tdElement.appendText('\n最低温度 ： ${temp["celsius"]}°C');
-    document.getElementById('eachDayCells').append(tdElement);
-  });
-  document.getElementById('tableBottom').innerHtml
-         = '予報発表時刻 ： ${format1(jsonObj["publicTime"])}';
+      Map temp = forecast['temperature']['max'];
+      if (temp == null)
+        txt = txt + '\n最高温度 ： ---';
+      else
+        txt = txt + '\n最高温度 ： ${temp["celsius"]}°C';
+      temp = forecast['temperature']['min'];
+      if (temp == null)
+        txt = txt + '\n最低温度 ： ---';
+      else
+        txt = txt + '\n最低温度 ： ${temp["celsius"]}°C';
+      td1Cells.cells[column].innerHtml = txt;
+      column = column + 1;
+    });
 
-  // description
-  String text = jsonObj['description']['text'];
-  text = text.replaceAll('\n\n', '\n');
-  text = text.replaceAll('【', '\n【');
-  document.getElementById('descriptionArea').innerHtml = '\n' + text;
-  String bottomText = '概況発表時刻 ： ' + format1(jsonObj["description"]["publicTime"])
-      + '\n\n${jsonObj["copyright"]["title"]}';
-  document.getElementById('descriptionBottom').innerHtml = bottomText;
+    document.getElementById('tableBottom').innerHtml =
+        '予報発表時刻 ： ${format1(jsonObj["publicTime"])}';
 
-  }catch (err, st){
+    // description
+    String text = jsonObj['description']['text'];
+    text = text.replaceAll('\n\n', '\n');
+    text = text.replaceAll('【', '\n【');
+    document.getElementById('descriptionArea').innerHtml = '\n' + text;
+    String bottomText = '概況発表時刻 ： ' +
+        format1(jsonObj["description"]["publicTime"]) +
+        '\n\n${jsonObj["copyright"]["title"]}';
+    document.getElementById('descriptionBottom').innerHtml = bottomText;
+  } catch (err, st) {
     print('$err \n $st');
   }
 }
 
-String format1(String str){
-  str=str.substring(0, str.length-8);
-  return str.replaceAll('T',' ');
+String format1(String str) {
+  str = str.substring(0, str.length - 8);
+  return str.replaceAll('T', ' ');
 }
 
 void log(message) {
-  if(LOG_REQUESTS) {
+  if (LOG_REQUESTS) {
     print(message);
-    querySelector("#log").innerHtml = querySelector("#log").innerHtml + "\n$message";
+    querySelector("#log").innerHtml =
+        querySelector("#log").innerHtml + "\n$message";
   }
 }
 
 void logFlesh(message) {
-  if(LOG_REQUESTS) {
+  if (LOG_REQUESTS) {
     print(message);
     querySelector("#log").innerHtml = "Log Messages:\n$message";
   }

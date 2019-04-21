@@ -1,4 +1,8 @@
 name: WeatherForecast_server
 description: A sample web application
+
+environment:
+  sdk: '>=0.8.10 <3.0.0'
+
 dependencies:
   mime_type: any

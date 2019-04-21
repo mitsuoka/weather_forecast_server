@@ -27,7 +27,7 @@ main() {
           print('status code : ${response.statusCode}');
           print('headers :\n${response.headers}');
           print('length : ${bodyBytes.length}');
-          if (response.statusCode == HttpStatus.OK) {
+          if (response.statusCode == HttpStatus.ok) {
             saveFile(fileName, bodyBytes).then((f){
             print('file saved : ${f.toString()}');
             });
@@ -48,13 +48,9 @@ main(){
 
 // save file into the file system
 // returns Future<file>
-Future<File> saveFile(String fname, List<int> bytes) {
-  var completer = new Completer();
-  var file = new File('../resources/' + fname);
+Future<File> saveFile(String fname, List<int> bytes) async {
+  var file = new File('resources/' + fname);
   file.create().then((file){
-    file.writeAsBytes(bytes).then((_){
-      completer.complete(file);
-      });
+    file.writeAsBytes(bytes);
     });
-  return completer.future;
 }

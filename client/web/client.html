@@ -4,9 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>LWWSアクセス</title>    
-    <script async type="application/dart" src="/weather/client.dart"></script>    
-    <script src="/weather/dart.js"></script>   
+    <title>LWWSアクセス</title>
+    <script defer src="/weather/client.dart.js"></script>
     <link rel="stylesheet" href="/weather/client.css">
   </head>
   
@@ -67,8 +66,8 @@
     
     <h2 id="forcastTitle"></h2>
      <table id="forecastsTable">
-       <tr id="imageCells"></tr>
-       <tr id="eachDayCells"></tr>
+       <tr id="imageCells"><td></td><td></td><td></td></tr>
+       <tr id="eachDayCells"><td></td><td></td><td></td></tr>
      </table>
      <pre id="tableBottom"></pre>
     

@@ -12,22 +12,22 @@ const cityCode = 130010; // Tokyo
 main() {
   HttpClient client = new HttpClient();
   var bodyStr = '';
-  client.getUrl(Uri.parse("http://${host}?city=${cityCode}"))
+  client
+      .getUrl(Uri.parse("http://${host}?city=${cityCode}"))
       .then((HttpClientRequest request) {
-        return request.close();
-      })
-      .then((HttpClientResponse response) {
-        // Process the response.
-        response.transform(UTF8.decoder).listen((bodyChunk) {
-          bodyStr = bodyStr + bodyChunk;
-        }, onDone: (){
-          // handle data
-          print('***headers***\n${response.headers}');
-          var jsonObj = JSON.decode(bodyStr);
-          print('***bodyString***\n$bodyStr');
-          print('***jsonObject***\n$jsonObj');
-          print('**forecasts***\n${jsonObj["forecasts"]}');
-          print('***description***\n${jsonObj["description"]}');
-        });
-      });
+    return request.close();
+  }).then((HttpClientResponse response) {
+    // Process the response.
+    response.transform(utf8.decoder).listen((bodyChunk) {
+      bodyStr = bodyStr + bodyChunk;
+    }, onDone: () {
+      // handle data
+      print('***headers***\n${response.headers}');
+      var jsonObj = json.decode(bodyStr);
+      print('***bodyString***\n$bodyStr');
+      print('***jsonObject***\n$jsonObj');
+      print('**forecasts***\n${jsonObj["forecasts"]}');
+      print('***description***\n${jsonObj["description"]}');
+    });
+  });
 }

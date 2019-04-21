@@ -30,6 +30,7 @@ td {
    width: 150px;
    height: 30px;
    font-size: 13px;
+   margin-left: 150px;
 }
 
 #imageCells {
