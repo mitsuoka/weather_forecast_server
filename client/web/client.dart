@@ -94,6 +94,7 @@ dartDom(jsonStr) {
       td1Cells.cells[column].innerHtml = txt;
       column = column + 1;
     });
+    if (column == 2) td1Cells.cells[column].innerHtml = '明後日\n(未発表)';
 
     document.getElementById('tableBottom').innerHtml =
         '予報発表時刻 ： ${format1(jsonObj["publicTime"])}';

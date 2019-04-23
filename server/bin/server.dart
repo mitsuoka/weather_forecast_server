@@ -202,8 +202,6 @@ class FileHandler {
       if (file.existsSync()) {
         mimeType = mime.mime(fname);
         if (mimeType == null) mimeType = 'text/plain; charset=UTF-8'; // default
-//        if (mimeType.contains("dart")) { print(".dart file found : $mimeType");
-//        mimeType = 'application/vnd-dart; charset=UTF-8';}
         response.headers.set('Content-Type', mimeType);
         addCorsHeaders(response);
         RandomAccessFile openedFile = file.openSync();
@@ -239,7 +237,7 @@ class FileHandler {
   }
 
   bool isExist(String fname) {
-    var file = new File('../resources/' + fname);
+    var file = new File('resources/' + fname);
     return file.existsSync();
   }
 
