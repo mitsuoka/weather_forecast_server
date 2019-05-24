@@ -1,10 +1,10 @@
-﻿weather\_forecast\_server
+weather\_forecast\_server
 ==
 
 **weather\_forecast\_server** is a **Dart 2** compliant sample REST server application utilizing Japanese Livedoor Weather Web Service (LWWS). This is a code sample and an attachment
-to the ["Dart Language Gide"](http://www.cresc.co.jp/tech/java/Google_Dart/DartLanguageGuide.pdf) written in Japanese.
+to the ["Dart Language Gide"](https://www.cresc.co.jp/tech/java/Google_Dart2/introduction/main_page.html) written in Japanese.
 
-このリポジトリは[「プログラミング言語 Dartの基礎」](http://www.cresc.co.jp/tech/java/Google_Dart/DartLanguageGuide_about.html)の添付資料であり、「RESTfulウェブ・サービスとDart (Dart in RESTful web services)」の「 簡単なクライアントとサーバ」の節で解説されています。この節ではサービスへの登録や専用のAPIが不要なウェブ・サービスを使った簡単なアプリケーションのクライアントとサーバのコード例を示しています。使用するウェブ・サービスはLivedoorのお天気Webサービス（Livedoor Weather Web Service / LWWS）で、現在全国142カ所の今日、明日、および明後日の天気予報、予想気温、および都道府県の天気概況情報を提供しています。
+このリポジトリは[「プログラミング言語 Dart 2の基礎」](https://www.cresc.co.jp/tech/java/Google_Dart2/introduction/main_page.html)の添付資料であり、「RESTfulウェブ・サービスとDart (Dart in RESTful web services)」の「 簡単なクライアントとサーバ」の節で解説されています。この節ではサービスへの登録や専用のAPIが不要なウェブ・サービスを使った簡単なアプリケーションのクライアントとサーバのコード例を示しています。使用するウェブ・サービスはLivedoorのお天気Webサービス（Livedoor Weather Web Service / LWWS）で、現在全国142カ所の今日、明日、および明後日の天気予報、予想気温、および都道府県の天気概況情報を提供しています。
 
 
 ### Installing ###
